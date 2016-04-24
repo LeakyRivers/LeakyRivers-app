@@ -13,26 +13,24 @@
   $myPassword = $VcapSvs["password"];
 
  try {
-  // Let's login to the database.
-  $sag = new Sag($myUsername . ".cloudant.com");
-  $sag->login($myUsername, $myPassword);
-  $sag->setDatabase("tweets");
+     // Let's login to the database.
+     $sag = new Sag($myUsername . ".cloudant.com");
+     $sag->login($myUsername, $myPassword);
+     $sag->setDatabase("tweets");
 
-  $resp = $sag->get('_design/views/_view/tweet-view')->body->rows;
+     $resp = $sag->get('_design/views/_view/tweet-view')->body->rows;
 
-  $sag->setDatabase("weather");
-  $weather = $sag->get('_design/views/_view/weather-view')->body->rows;
+     $sag->setDatabase("weather");
+     $weather = $sag->get('_design/views/_view/weather-view')->body->rows;
 
-}
-catch(Exception $e) {
-//We sent something to Sag that it didn't expect.
-echo '<p>There Was an Error Getting Data from Cloudant!!!</p>';
-echo $e->getMessage();
-}
+    }
+    catch(Exception $e) {
+    //We sent something to Sag that it didn't expect.
+    echo '<p>There Was an Error Getting Data from the database :/ </p>';
+    echo $e->getMessage();
+    }
 
  ?>
-
-
 
 <!DOCTYPE HTML>
 
@@ -43,8 +41,8 @@ echo $e->getMessage();
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
-        <link rel="stylesheet" href="http://openlayers.org/en/v3.15.1/css/ol.css" type="text/css">
-        <script src="http://openlayers.org/en/v3.15.1/build/ol.js"></script>
+        <link rel="stylesheet" href="assets/css/ol.css" type="text/css">
+        <script src="assets/js/ol.js"></script>
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
@@ -57,42 +55,41 @@ echo $e->getMessage();
 						<div class="inner">
 
 							<!-- Logo -->
-								<a href="index.html" class="logo">
-									<span><img src="images/logo.png" alt="" /></span>
-                                    <!--<span class="title">Leaky Rivers</span>-->
+								<a href="index.php" class="logo">
+									<span class="symbol"><img src="images/logo.png" alt="Leaky Rivers" /></span>
 								</a>
+                                <!-- <div class="field">
+                                    <input type="text" name="location" id="location" placeholder="Location " />
+                                </div> -->
 
 							<!-- Nav -->
-								<!-- <nav>
+								<nav>
 									<ul>
 										<li><a href="#menu">Menu</a></li>
 									</ul>
-								</nav> -->
+								</nav>
 
 						</div>
 					</header>
 
 				<!-- Menu -->
-					<!-- <nav id="menu">
+					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="generic.html">Ipsum veroeros</a></li>
-							<li><a href="generic.html">Tempus etiam</a></li>
-							<li><a href="generic.html">Consequat dolor</a></li>
-							<li><a href="elements.html">Elements</a></li>
+							<li><a href="index.php">Home</a></li>
+							<li><a href="index.php">Change Location</a></li>
 						</ul>
-					</nav> -->
+					</nav>
 
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
 							<header>
-                                <div id="popup" class="popup"></div>
+                                <!-- <div id="popup" class="popup"></div>
                                 <div id="popup-content" class="popup-content"></div>
-                                <div id="popup-closer" class="popup-closer"></div>
+                                <div id="popup-closer" class="popup-closer"></div> -->
 								<div id="map" class="map"></div>
-                                <div id="info" class="info"></div>
+                                <!-- <div id="info" class="info"></div> -->
 							</header>
 
 							<section class="tiles">
@@ -102,7 +99,7 @@ echo $e->getMessage();
                                      <span class="image">
                                          <img src="images/pic01.jpg" alt="" />
                                      </span>
-                                     <a href="generic.html">
+                                     <a href="#">
                                          <h2> ' . $value->value->phrase_12char . '</h2>
                                          <div class="content">
                                              <p>How is it looking?</p>
@@ -114,7 +111,7 @@ echo $e->getMessage();
                                      <span class="image">
                                          <img src="images/pic01.jpg" alt="" />
                                      </span>
-                                     <a href="generic.html">
+                                     <a href="#">
                                          <h2> ' . $value->value->sky_cover . ' </h2>
                                          <div class="content">
                                              <p>Sky cover</p>
@@ -126,7 +123,7 @@ echo $e->getMessage();
                                      <span class="image">
                                          <img src="images/pic01.jpg" alt="" />
                                      </span>
-                                     <a href="generic.html">
+                                     <a href="#">
                                          <h2> ' . $value->value->metric->temp . '&#x2103  </h2>
                                          <div class="content">
                                              <p>Temperature</p>
@@ -144,7 +141,7 @@ echo $e->getMessage();
 						<div class="inner">
 							<section>
 								<h2>Get in touch</h2>
-								<!-- <form method="post" action="#">
+								<form method="post" action="messageUs.php">
 									<div class="field half first">
 										<input type="text" name="name" id="name" placeholder="Name" />
 									</div>
@@ -157,23 +154,18 @@ echo $e->getMessage();
 									<ul class="actions">
 										<li><input type="submit" value="Send" class="special" /></li>
 									</ul>
-								</form> -->
+								</form>
 							</section>
 							<section>
 								<h2>Follow</h2>
 								<ul class="icons">
-									<li><a href="http://twitter.com/leakyrivers" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
-									<!-- <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
-									<li><a href="#" class="icon style2 fa-github"><span class="label">GitHub</span></a></li>
-									<li><a href="#" class="icon style2 fa-500px"><span class="label">500px</span></a></li>
-									<li><a href="#" class="icon style2 fa-phone"><span class="label">Phone</span></a></li>
-									<li><a href="#" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li> -->
+									<li><a href="http://twitter.com/LeakyRivers" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="http://facebook.com/LeakyRivers" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+                                    <li><a href="https://github.com/LeakyRivers" class="icon style2 fa-github"><span class="label">GitHub</span></a></li>
 								</ul>
 							</section>
 							<ul class="copyright">
-								<li>&copy; Leaky Rivers. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>Leaky Rivers 2016 - NASA SpaceAppChallenge.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 							</ul>
 						</div>
 					</footer>
@@ -192,7 +184,7 @@ echo $e->getMessage();
 
     var vector = new ol.layer.Vector({
     source: new ol.source.Vector({
-    url: 'data/kml/water.kml',
+    url: 'data/kml/waterNL.kml',
     format: new ol.format.KML()
     })
     });
@@ -207,32 +199,30 @@ echo $e->getMessage();
         }
     }
 
-    var tweets;
-    var features = [];
-    var styles = [];
-
     function displayTweets() {
-        tweets = <?php echo json_encode($resp); ?>;
+        var tweets = <?php echo json_encode($resp); ?>;
+        var styles = [];
+        var features = [];
 
         for (i = 0; i < tweets.length; i++) {
 
             if (!styles[i]) {
-   // In your case you will want to use  image : new ol.style.Icon(({
-   // but this is the example that I have on hand..
+
                styles[i] = new ol.style.Style({
                  image: new ol.style.Circle({
                    radius: 5,
-                //    stroke: new ol.style.Stroke({
-                //      color: '#000'
-                //    }),
+                   stroke: new ol.style.Stroke({
+                     color: '#000'
+                   }),
                    fill: new ol.style.Fill({
-                     color: '#3AF' // attribute colour
+                     color: '#3AF'
                    })
                  }),
                  text: new ol.style.Text({
-                   text: tweets[i].value.text, // attribute code
+                   text: tweets[i].value.text,
+                   scale: 2,
                    fill: new ol.style.Fill({
-                     color: "#FFF" // black text // TODO: Unless circle is dark, then white..
+                     color: "#FFF"
                    })
                  })
                });
@@ -248,7 +238,6 @@ echo $e->getMessage();
 
             marker.setStyle(styles[i]);
             features.push(marker);
-            console.log(tweets[i].value.text);
         }
 
         var source = vector.getSource();
@@ -314,36 +303,6 @@ echo $e->getMessage();
     //     //}
     // });
 
-    var displayFeatureInfo = function(pixel) {
-    var features = [];
-    map.forEachFeatureAtPixel(pixel, function(feature) {
-    features.push(feature);
-    });
-    if (features.length > 0) {
-    var info = [];
-    var i, ii;
-    for (i = 0, ii = features.length; i < ii; ++i) {
-    info.push(features[i].get('name'));
-    }
-    document.getElementById('info').innerHTML = info.join(', ') || '(unknown)';
-    map.getTarget().style.cursor = 'pointer';
-    } else {
-    document.getElementById('info').innerHTML = '&nbsp;';
-    map.getTarget().style.cursor = '';
-    }
-    };
-
-    map.on('pointermove', function(evt) {
-    if (evt.dragging) {
-    return;
-    }
-    var pixel = map.getEventPixel(evt.originalEvent);
-    displayFeatureInfo(pixel);
-    });
-
-    map.on('click', function(evt) {
-    displayFeatureInfo(evt.pixel);
-    });
 </script>
 
 		<!-- Scripts -->

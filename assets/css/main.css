@@ -2874,12 +2874,11 @@
 			}
 
 			#header .logo .symbol {
-				margin-right: 0.65em;
+				margin-right: 0em;
 			}
 
 				#header .logo .symbol img {
 					display: block;
-					width: 2em;
 					height: 2em;
 				}
 
